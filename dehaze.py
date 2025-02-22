@@ -52,7 +52,6 @@ image_dehazed_gray = cv2.cvtColor(image_dehazed, cv2.COLOR_BGR2GRAY)
 # Step 11: Normalize the pixel values of the dehazed grayscale image
 image_dehazed_gray = cv2.normalize(image_dehazed_gray, None, 0, 255, cv2.NORM_MINMAX)
 
-# Display the original hazy image and dehazed image
 cv2.imshow('Hazy Image', image)
 cv2.imshow('Dehazed Image', image_dehazed_gray)
 cv2.waitKey(0)

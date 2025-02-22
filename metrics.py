@@ -8,6 +8,9 @@ def metrics(img1_path, img2_path):
     img1 = cv2.imread(img1_path)
     img2 = cv2.imread(img2_path)
 
+    if img1 is None or img2 is None:
+        raise ValueError("One of the images could not be loaded.")
+
     # Calculate PSNR (Peak Signal-to-Noise Ratio)
     mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
@@ -23,21 +26,34 @@ def metrics(img1_path, img2_path):
     ssim = structural_similarity(gray_image1, gray_image2)
     return psnr, ssim
 
-
 source = r"D:\fourierdehazing\dataset\hazy_images"
 dest = r"D:\fourierdehazing\dataset\dehazed_images"
 images = os.listdir(source)
 
 psnr_total = 0
 ssim_total = 0
+count = 0
 
 for image in images:
-    psnr, ssim = metrics(source+image, dest+image[:-4]+"_dehazed"+image[-4:])
-    psnr_total += psnr
-    ssim_total += ssim
+    try:
+        source_path = os.path.join(source, image)
+        dest_path = os.path.join(dest, image[:-4] + "_dehazed" + image[-4:])
+        
+        if not os.path.exists(dest_path):
+            print(f"Dehazed image not found for: {image}")
+            continue
 
-psnr = psnr_total/len(images)
-ssim = ssim_total/len(images)
+        psnr, ssim = metrics(source_path, dest_path)
+        psnr_total += psnr
+        ssim_total += ssim
+        count += 1
+    except Exception as e:
+        print(f"Error processing {image}: {e}")
 
-print("PSNR:", psnr)
-print("SSIM:", ssim)
+if count > 0:
+    psnr = psnr_total / count
+    ssim = ssim_total / count
+    print("PSNR:", psnr)
+    print("SSIM:", ssim)
+else:
+    print("No valid image pairs found for comparison.")
