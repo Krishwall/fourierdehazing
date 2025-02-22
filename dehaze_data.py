@@ -33,8 +33,8 @@ def dehaze(image: np.array):
 
     return image_dehazed_gray
 
-source = r"C:\Users\KRISH\Desktop\dehazingimage\SSIDH\dataset\hazy_images"
-dest = r"C:\Users\KRISH\Desktop\dehazingimage\SSIDH\dataset\dehazed_images"
+source = r"D:\fourierdehazing\dataset\hazy_images"
+dest = r"D:\fourierdehazing\dataset\dehazed_images"
 images = os.listdir(source)
 for image in images:
     img = cv2.imread(source+image)

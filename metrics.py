@@ -24,8 +24,8 @@ def metrics(img1_path, img2_path):
     return psnr, ssim
 
 
-source = r"D:\dehazeFourier\SSIDH\dataset\hazy_images"
-dest = r"D:\dehazeFourier\SSIDH\dataset\dehazed_images"
+source = r"D:\fourierdehazing\dataset\hazy_images"
+dest = r"D:\fourierdehazing\dataset\dehazed_images"
 images = os.listdir(source)
 
 psnr_total = 0
