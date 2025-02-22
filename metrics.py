@@ -4,14 +4,12 @@ import numpy as np
 import os
 
 def metrics(img1_path, img2_path):
-    # Load the original and distorted images
     img1 = cv2.imread(img1_path)
     img2 = cv2.imread(img2_path)
 
     if img1 is None or img2 is None:
         raise ValueError("One of the images could not be loaded.")
 
-    # Calculate PSNR (Peak Signal-to-Noise Ratio)
     mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
         psnr = 100
@@ -22,7 +20,6 @@ def metrics(img1_path, img2_path):
     gray_image1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
     gray_image2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-    # Calculate SSIM
     ssim = structural_similarity(gray_image1, gray_image2)
     return psnr, ssim
 
